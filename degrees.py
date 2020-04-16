@@ -85,7 +85,6 @@ def main():
 
 
 def shortest_path(source, target):
-    
     num_explored = 0
     #Initial Node
     A = Node(state=source,parent=None,action=None) 
@@ -93,12 +92,12 @@ def shortest_path(source, target):
     BFS for shortest path
     Using QueueFrontier as we want shortest path
     '''
-    F = StackFrontier() 
+    F = QueueFrontier() 
     #Adding initial node to frontier
     F.add(A)
     #Nodes checked 
     explored = set()
-    path_list =[]
+
     while True:
         if F.empty():
             return None
@@ -110,29 +109,29 @@ def shortest_path(source, target):
         if node.state != target:
             explored.add(node.state)
         # Add neighbors to frontier
-            for action, state in neighbors_for_person(node.state):
+            for action, state in neighbors_for_person(node.state):           
+                if state == target :
+                    node_t = Node(state=state, parent=node, action=action)
+                    print("Target Reached")
+                    movies = []  # list of movies in path
+                    actors = []  # list of actors in path
+                    while node_t.parent is not None:
+                        movies.append(node_t.action)
+                        actors.append(node_t.state)
+                        node_t = node_t.parent
+                    movies.reverse()
+                    actors.reverse()
+                    path_list =[]
+        #actors and movies will be of the same length
+                    for kk in range(len(movies)) :
+            #Stores the shortest path to be returned
+                        path_list.append((movies[kk],actors[kk]))
+                    return path_list
                 if not F.contains_state(state) and state not in explored:
                     child = Node(state=state, parent=node, action=action)
-                    F.add(child)
-        continue
-      
+                    F.add(child)     
         
-        print("Target Reached")
-        movies = []  # list of movies in path
-        actors = []  # list of actors in path
-        while node.parent is not None:
-                    movies.append(node.action)
-                    actors.append(node.state)
-                    node = node.parent
-        movies.reverse()
-        actors.reverse()
-        #actors and movies will be of the same length
-        for movie in range(len(movies)) :
-            kk = movies[movie]
-            jj = actors[movie]
-            #Stores the shortest path to be returned
-        path_list.append([kk,jj])
-        return path_list
+        
 
     # TODO
     raise NotImplementedError

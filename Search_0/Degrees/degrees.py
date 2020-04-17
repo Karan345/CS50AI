@@ -106,10 +106,9 @@ def shortest_path(source, target):
         num_explored += 1
 
         # If node is the goal, then we have a solution
-        if node.state != target:
-            explored.add(node.state)
+        explored.add(node.state)
         # Add neighbors to frontier
-            for action, state in neighbors_for_person(node.state):           
+        for action, state in neighbors_for_person(node.state):           
                 if state == target :
                     node_t = Node(state=state, parent=node, action=action)
                     print("Target Reached")
@@ -124,7 +123,7 @@ def shortest_path(source, target):
                     path_list =[]
         #actors and movies will be of the same length
                     for kk in range(len(movies)) :
-            #Stores the shortest path to be returned
+        #Stores the shortest path to be returned
                         path_list.append((movies[kk],actors[kk]))
                     return path_list
                 if not F.contains_state(state) and state not in explored:
